@@ -1,16 +1,78 @@
-<p style="color: green"><%= notice %></p>
+<!-- app/views/movies/index.html.erb -->
+<div class="page-container">
+  <header class="page-header">
+    <h1 class="page-title">🥔 Rotten Potatoes</h1>
+    <div class="header-actions">
+      <%= link_to '+ Add New Movie', new_movie_path, class: 'btn btn-primary' %>
+    </div>
+  </header>
 
-<% content_for :title, "Movies" %>
-
-<h1>Movies</h1>
-
-<div id="movies">
-  <% @movies.each do |movie| %>
-    <%= render movie %>
-    <p>
-      <%= link_to "Show this movie", movie %>
-    </p>
-  <% end %>
+  <main class="content-area">
+    <div class="table-container">
+      <table class="movies-table">
+        <thead>
+          <tr>
+            <th class="<%= sort_class('title') %>">
+              <%= sortable_link('title', 'Movie Title') %>
+            </th>
+            <th class="<%= sort_class('rating') %>">
+              <%= sortable_link('rating', 'Rating') %>
+            </th>
+            <th class="<%= sort_class('release_date') %>">
+              <%= sortable_link('release_date', 'Release Date') %>
+            </th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <% @movies.each_with_index do |movie, index| %>
+            <tr class="<%= 'row-even' if index.even? %>">
+              <td class="movie-title">
+                <%= link_to movie.title, movie_path(movie), class: 'movie-link' %>
+              </td>
+              <td class="movie-rating">
+                <span class="rating-badge rating-<%= movie.rating&.downcase&.gsub('-', '') %>">
+                  <%= movie.rating %>
+                </span>
+              </td>
+              <td class="movie-date">
+                <%= format_date(movie.release_date) %>
+              </td>
+            </tr>
+          <% end %>
+          
+          <% if @movies.empty? %>
+            <tr>
+              <td colspan="3" class="empty-state">
+                <div class="empty-message">
+                  <span class="empty-icon">🎭</span>
+                  <p>No movies in the database yet.</p>
+                  <%= link_to 'Add your first movie!', new_movie_path, class: 'btn btn-primary' %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+        
+        <tfoot>
+          <tr>
+            <td colspan="3" class="table-footer">
+              <div class="footer-content">
+                <span class="movie-count">
+                  <strong><%= @movies.count %></strong> 
+                  <%= 'movie'.pluralize(@movies.count) %> in database
+                </span>
+                <% if @sort_column.present? %>
+                  <span class="sort-info">
+                    Sorted by: <strong><%= @sort_column.humanize %></strong> 
+                    (<%= @sort_direction %>)
+                  </span>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </main>
 </div>
-
-<%= link_to "New movie", new_movie_path %>

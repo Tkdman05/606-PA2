@@ -1,10 +1,43 @@
-<p style="color: green"><%= notice %></p>
+<!-- app/views/movies/show.html.erb -->
+<div class="page-container">
+  <header class="page-header">
+    <h1 class="page-title">Movie Details</h1>
+    <div class="breadcrumb">
+      <%= link_to '← Back to Movies', movies_path %>
+    </div>
+  </header>
 
-<%= render @movie %>
-
-<div>
-  <%= link_to "Edit this movie", edit_movie_path(@movie) %> |
-  <%= link_to "Back to movies", movies_path %>
-
-  <%= button_to "Destroy this movie", @movie, method: :delete %>
+  <main class="content-area">
+    <div class="movie-card">
+      <div class="movie-info">
+        <h2 class="movie-title-large"><%= @movie.title %></h2>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <label class="info-label">Rating</label>
+            <div class="info-value">
+              <span class="rating-badge rating-<%= @movie.rating&.downcase&.gsub('-', '') %>">
+                <%= @movie.rating %>
+              </span>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <label class="info-label">Release Date</label>
+            <div class="info-value">
+              <%= format_date(@movie.release_date) %>
+            </div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <%= link_to 'Edit Movie', edit_movie_path(@movie), class: 'btn btn-secondary' %>
+          <%= link_to 'Delete Movie', movie_path(@movie), 
+              method: :delete, 
+              data: { confirm: 'Are you sure you want to delete this movie?' }, 
+              class: 'btn btn-danger' %>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>

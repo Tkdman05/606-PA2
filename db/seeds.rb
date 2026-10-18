@@ -8,6 +8,9 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # Seed the RottenPotatoes DB with some movies.
+Movie.destroy_all
+puts "Cleared existing movies"
+
 more_movies = [
   { title: 'My Neighbor Totoro', rating: 'G',
     release_date: '16-Apr-1988' },
@@ -18,7 +21,17 @@ more_movies = [
   { title: 'Nomadland', rating: 'R',
     release_date: '19-Feb-2021' },
   { title: 'CODA', rating: 'PG-13',
-    release_date: '13-Aug-2021' }
+    release_date: '13-Aug-2021' },
+  { title: "Star Wars", rating: "PG", 
+    release_date: "1977-05-25" },
+  { title: "Coraline", rating: "PG", 
+    release_date: "2009-02-06" },
+  { title: "Godzilla Minus One", rating: "PG-13", 
+    release_date: "2023-12-01" },
+  { title: "The Batman", rating: "PG-13", 
+  release_date: "2022-03-04" },
+  { title: "Project Hail Mary", rating: "PG-13", 
+  release_date: "2026-03-20" }
 ]
 
 more_movies.each do |movie|

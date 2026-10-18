@@ -1,11 +1,15 @@
-<% content_for :title, "New movie" %>
+<!-- app/views/movies/new.html.erb -->
+<div class="page-container">
+  <header class="page-header">
+    <h1 class="page-title">Add New Movie</h1>
+    <div class="breadcrumb">
+      <%= link_to '← Back to Movies', movies_path %>
+    </div>
+  </header>
 
-<h1>New movie</h1>
-
-<%= render "form", movie: @movie %>
-
-<br>
-
-<div>
-  <%= link_to "Back to movies", movies_path %>
+  <main class="content-area">
+    <div class="form-container">
+      <%= render 'form', movie: @movie %>
+    </div>
+  </main>
 </div>
